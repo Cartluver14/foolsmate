@@ -60,9 +60,11 @@ namespace foolsmate
             move = Move.One;
             window = new Rectangle(0,0 ,600,600);
             wPawnrect = new Rectangle(300, 450, 70, 70);
-            bPawn1rect=new Rectangle(300, 80, 70,70);
+            bPawn1rect = new Rectangle(300, 80, 70,70);
             wBishoprect = new Rectangle(380, 535, 55, 55);
-            wQueenrect = new Rectangle(0, 0, 70, 70);
+            wQueenrect = new Rectangle(230, 540, 70, 70);
+            bPawn2rect = new Rectangle(520, 90, 70, 70);
+            bPawn3rect = new Rectangle(240, 90, 70, 70);
  
             _graphics.PreferredBackBufferWidth = window.Width;
             _graphics.PreferredBackBufferHeight = window.Height;
@@ -90,6 +92,32 @@ namespace foolsmate
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            if (move == Move.One)
+            {
+                wPawnrect.Y -= 1;
+
+                if (wPawnrect.Y <= 312)
+                    move = Move.Two;
+            }
+            else if (move == Move.Two)
+            {
+                bPawn1rect.Y += 1;
+                if (bPawn1rect.Y >= 222)
+                    move = Move.Three;
+
+            }
+            else if (move == Move.Three)
+            {
+                wQueenrect.X += 1;
+                wQueenrect.Y -= 1;
+                if (wQueenrect.X >= 534)
+                    move = Move.Four;
+
+
+            }
+
+
+
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -103,9 +131,11 @@ namespace foolsmate
             _spriteBatch.Begin();
             _spriteBatch.Draw(boardTexture, window, Color.White);
             _spriteBatch.Draw(wPawnTexture, wPawnrect, Color.White);
-            _spriteBatch.Draw(bPawnTexture,bPawn1rect, Color.White);
             _spriteBatch.Draw(wBishopTexture,wBishoprect, Color.White);
             _spriteBatch.Draw(wQueenTexture, wQueenrect,Color.White);
+            _spriteBatch.Draw(bPawnTexture, bPawn1rect, Color.Green);
+            _spriteBatch.Draw(bPawnTexture, bPawn2rect, Color.White);
+            _spriteBatch.Draw(bPawnTexture, bPawn3rect, Color.Red);
             _spriteBatch.End();
 
             base.Draw(gameTime);
